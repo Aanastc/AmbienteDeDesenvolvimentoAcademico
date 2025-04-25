@@ -186,5 +186,30 @@
 				interval = setInterval(nextSlide, 3000);
 			}
 		</script>
+		<script>
+			function parseDate(str) {
+				const [day, month, year] = str.split("/");
+				return new Date(`${year}-${month}-${day}`);
+			}
+
+			const hoje = new Date();
+			hoje.setHours(0, 0, 0, 0); // zera o horário para comparar apenas a data
+
+			document
+				.querySelectorAll(".gradeCronograma_cardes .paragraph")
+				.forEach((paragraph) => {
+					const span = paragraph.querySelector("span");
+					const dataTexto = span.textContent.trim();
+
+					if (/^\d{2}\/\d{2}\/\d{4}$/.test(dataTexto)) {
+						const data = parseDate(dataTexto);
+						data.setHours(0, 0, 0, 0);
+
+						if (data < hoje) {
+							paragraph.style.display = "none";
+						}
+					}
+				});
+		</script>
 	</body>
 </html>

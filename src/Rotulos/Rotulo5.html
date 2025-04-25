@@ -11,15 +11,15 @@
 	<body>
 		<section class="TreinamentoENADE container-xl">
 			<div class="flexbox__cardSection"
-				><div class="cardSection background-red-100"
+				><div id="etapa-1" class="cardSection background-red-100"
 					><svg
-						id="cardSection__icon"
 						xmlns="http://www.w3.org/2000/svg"
 						width="32"
 						height="33"
 						viewBox="0 0 32 33"
 						fill="none">
 						<path
+							id="etapa-1-icon"
 							d="M21.7075 13.1084C21.8005 13.2013 21.8742 13.3116 21.9246 13.433C21.9749 13.5544 22.0008 13.6845 22.0008 13.8159C22.0008 13.9473 21.9749 14.0775 21.9246 14.1989C21.8742 14.3203 21.8005 14.4305 21.7075 14.5234L14.7075 21.5234C14.6146 21.6164 14.5043 21.6902 14.3829 21.7405C14.2615 21.7908 14.1314 21.8167 14 21.8167C13.8686 21.8167 13.7385 21.7908 13.6171 21.7405C13.4957 21.6902 13.3854 21.6164 13.2925 21.5234L10.2925 18.5234C10.1049 18.3358 9.99944 18.0813 9.99944 17.8159C9.99944 17.5506 10.1049 17.2961 10.2925 17.1084C10.4801 16.9208 10.7346 16.8154 11 16.8154C11.2654 16.8154 11.5199 16.9208 11.7075 17.1084L14 19.4022L20.2925 13.1084C20.3854 13.0154 20.4957 12.9417 20.6171 12.8914C20.7385 12.841 20.8686 12.8151 21 12.8151C21.1314 12.8151 21.2615 12.841 21.3829 12.8914C21.5043 12.9417 21.6146 13.0154 21.7075 13.1084ZM28 6.81592V26.8159C28 27.3464 27.7893 27.8551 27.4142 28.2301C27.0391 28.6052 26.5304 28.8159 26 28.8159H6C5.46957 28.8159 4.96086 28.6052 4.58579 28.2301C4.21071 27.8551 4 27.3464 4 26.8159V6.81592C4 6.28549 4.21071 5.77678 4.58579 5.4017C4.96086 5.02663 5.46957 4.81592 6 4.81592H26C26.5304 4.81592 27.0391 5.02663 27.4142 5.4017C27.7893 5.77678 28 6.28549 28 6.81592ZM26 26.8159V6.81592H6V26.8159H26Z"
 							fill="#DE2B2B" />
 					</svg>
@@ -29,10 +29,11 @@
 					<a
 						class="button-pill button--icon-left button--blue"
 						href=""
-						aria-label="Coletar recompensa">
-						<span id="cardSection_button-text">Acessar</span>
+						aria-label="Coletar recompensa"
+						id="etapa-1-button">
+						<span id="etapa-1-text">Acessar</span>
 						<svg
-							id="cardSection_button-icon"
+							id="etapa-1-button-icon"
 							xmlns="http://www.w3.org/2000/svg"
 							width="18"
 							height="18"
@@ -76,5 +77,60 @@
 						</svg> </a></div
 			></div>
 		</section>
+		<script>
+			const endDates = [{ id: "etapa-1", date: "2025-04-23" }];
+
+			endDates.forEach((etapa) => {
+				const today = new Date();
+				const endDate = new Date(etapa.date);
+
+				// Zerando as horas, minutos e segundos para comparar apenas a data
+				today.setHours(0, 0, 0, 0);
+				endDate.setHours(0, 0, 0, 0);
+
+				if (today > endDate) {
+					// Mudar background
+					const section = document.getElementById(etapa.id);
+					if (
+						section.classList.contains("background-red-100") ||
+						section.classList.contains("background-blue-100")
+					) {
+						section.classList.remove(
+							"background-red-100",
+							"background-blue-100"
+						);
+						section.classList.add("background-neutral-100");
+					}
+
+					// Desabilitar botão
+					const button = document.getElementById(`${etapa.id}-button`);
+					button.classList.remove("button--blue");
+					button.classList.add("disabled");
+
+					// Trocar texto do botão
+					const buttonText = document.getElementById(`${etapa.id}-text`);
+					buttonText.textContent = "Encerrado";
+
+					// Trocar ícone
+					const buttonIcon = document.getElementById(`${etapa.id}-button-icon`);
+					buttonIcon.innerHTML = `
+			    <svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="32"
+						height="33"
+						viewBox="0 0 32 33"
+						fill="none">
+						<path
+							d="M21.7075 13.1084C21.8005 13.2013 21.8742 13.3116 21.9246 13.433C21.9749 13.5544 22.0008 13.6845 22.0008 13.8159C22.0008 13.9473 21.9749 14.0775 21.9246 14.1989C21.8742 14.3203 21.8005 14.4305 21.7075 14.5234L14.7075 21.5234C14.6146 21.6164 14.5043 21.6902 14.3829 21.7405C14.2615 21.7908 14.1314 21.8167 14 21.8167C13.8686 21.8167 13.7385 21.7908 13.6171 21.7405C13.4957 21.6902 13.3854 21.6164 13.2925 21.5234L10.2925 18.5234C10.1049 18.3358 9.99944 18.0813 9.99944 17.8159C9.99944 17.5506 10.1049 17.2961 10.2925 17.1084C10.4801 16.9208 10.7346 16.8154 11 16.8154C11.2654 16.8154 11.5199 16.9208 11.7075 17.1084L14 19.4022L20.2925 13.1084C20.3854 13.0154 20.4957 12.9417 20.6171 12.8914C20.7385 12.841 20.8686 12.8151 21 12.8151C21.1314 12.8151 21.2615 12.841 21.3829 12.8914C21.5043 12.9417 21.6146 13.0154 21.7075 13.1084ZM28 6.81592V26.8159C28 27.3464 27.7893 27.8551 27.4142 28.2301C27.0391 28.6052 26.5304 28.8159 26 28.8159H6C5.46957 28.8159 4.96086 28.6052 4.58579 28.2301C4.21071 27.8551 4 27.3464 4 26.8159V6.81592C4 6.28549 4.21071 5.77678 4.58579 5.4017C4.96086 5.02663 5.46957 4.81592 6 4.81592H26C26.5304 4.81592 27.0391 5.02663 27.4142 5.4017C27.7893 5.77678 28 6.28549 28 6.81592ZM26 26.8159V6.81592H6V26.8159H26Z"
+							fill="#ccc" />
+					</svg>
+			   `;
+
+					// Trocar o fill do icone superior
+					const topIcon = document.getElementById(`${etapa.id}-icon`);
+					topIcon.setAttribute("fill", "#ccc");
+				}
+			});
+		</script>
 	</body>
 </html>
